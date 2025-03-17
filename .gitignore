@@ -5,6 +5,7 @@ bower_components
 node_modules
 
 # Generated files
+index.js
 .psci
 output
 output-es
