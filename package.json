@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/flyingsl0ths/sage-dictionary-api#readme",
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
     "concurrently": "9.1.2",
     "esbuild": "0.25.1",
     "esbuild-copy-static-files": "0.1.0",
