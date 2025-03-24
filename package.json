@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "rel": "spago -x prod.dhall build && npx purs-backend-es bundle-app && node./build.mjs",
+    "rel": "spago -x prod.dhall build && npx purs-backend-es bundle-app -p 'node' && node ./build.mjs",
     "dev": "concurrently 'spago build --watch' 'node ./build-dev.mjs'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
