@@ -10,7 +10,6 @@ import Fetch (fetch)
 import HTTPurple (class Generic, RouteDuplex', ServerM, headers, mkRoute, response', segment, serve, (/))
 import HTTPurple.Headers (ResponseHeaders)
 import Node.HTTP.Types (ServerResponse)
-import Partial.Unsafe (unsafePartial)
 
 type Word' a = Record a
 data Route = Word String
@@ -43,19 +42,18 @@ fetchWord word = do
     Nothing -> resp "{\"error\": \"Unknown word\"}"
   where
   getWord w =
-    unsafePartial $
-      do
-        { status, text } <- fetch (url <> w) { headers: { "Accept": "application/json" } }
-        case status of
-          200 ->
-            do
-              text' <- text
-              pure
-                { status
-                , json: Just $ AR.parseJson text'
-                }
+    do
+      { status, text } <- fetch (url <> w) { headers: { "Accept": "application/json" } }
+      case status of
+        200 ->
+          do
+            text' <- text
+            pure
+              { status
+              , json: Just $ AR.parseJson text'
+              }
 
-          _ -> pure { status, json: Nothing }
+        _ -> pure { status, json: Nothing }
 
 main :: ServerM
 main =

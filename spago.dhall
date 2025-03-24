@@ -9,7 +9,6 @@
   , "httpurple"
   , "maybe"
   , "node-http"
-  , "partial"
   , "prelude"
   ]
 , packages = ./packages.dhall
