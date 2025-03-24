@@ -13,7 +13,6 @@ import Node.HTTP.Types (ServerResponse)
 import Partial.Unsafe (unsafePartial)
 
 type Word' a = Record a
-type FetchedJson a = { status :: Int, json :: Either AR.JsonDecodeError a }
 data Route = Word String
 
 derive instance Generic Route _
