@@ -11,13 +11,13 @@ export type Word = {
 export function parseWord(word: any): Word | null {
   const meanings = word.meanings;
 
-  if (!meanings && meanings.length === 0) {
+  if (!meanings || meanings.length === 0) {
     return null;
   }
 
   const phonestics = word.phonetics;
 
-  if (!phonestics && phonestics.length === 0) {
+  if (!phonestics || phonestics.length === 0) {
     return null;
   }
 
