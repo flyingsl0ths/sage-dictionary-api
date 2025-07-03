@@ -1,0 +1,20 @@
+{
+	"name": "api2",
+	"type": "module",
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"format": "npx @biomejs/biome format src/*.ts",
+		"lint": "npx @biomejs/biome lint src/*.ts"
+	},
+	"dependencies": {
+		"@hono/node-server": "^1.15.0",
+		"hono": "^4.8.3"
+	},
+	"devDependencies": {
+		"@types/node": "^20.11.17",
+		"tsx": "^4.7.1",
+		"typescript": "^5.8.3"
+	}
+}
