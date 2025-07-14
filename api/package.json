@@ -5,7 +5,7 @@
 		"dev": "tsx watch src/index.ts",
 		"build": "tsc",
 		"start": "node dist/index.js",
-		"format": "npx @biomejs/biome format src/*.ts",
+		"format": "npx @biomejs/biome format --write --fix --verbose src/*.ts package.json",
 		"lint": "npx @biomejs/biome lint src/*.ts"
 	},
 	"dependencies": {
