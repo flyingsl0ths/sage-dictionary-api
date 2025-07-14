@@ -5,6 +5,7 @@ export type Word = {
   readonly synonyms: string[];
   readonly antonyms: string[];
   readonly sentences: string[];
+	readonly sentences: Map<string, string[]>;
 };
 
 // biome-ignore lint: lint/suspicious/noExplicitAny
@@ -47,14 +48,20 @@ function findPhonetics(phonoetics: any[]): string {
 }
 
 // biome-ignore lint: lint/suspicious/noExplicitAny
-function extractExamples(meanings: any[]): string[] {
-  const examples: string[] = [];
-  for (const meaning of meanings) {
-    for (const definition of meaning.definitions) {
-      if (definition.example) {
-        examples.push(definition.example);
-      }
-    }
-  }
-  return examples;
+function extractExamples(meanings: any[]): Map<string, string[]> {
+	const examples: Map<string, string[]> = new Map();
+	for (const meaning of meanings) {
+		for (const definition of meaning.definitions) {
+			if (definition.example) {
+				const partOfSpeech = examples.get(meaning.partOfSpeech);
+				if (partOfSpeech) {
+					partOfSpeech.push(definition.example);
+				} else {
+					examples.set(meaning.partOfSpeech, [definition.example]);
+				}
+			}
+		}
+	}
+
+	return examples;
 }
