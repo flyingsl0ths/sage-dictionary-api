@@ -7,7 +7,7 @@ export type Word = {
 	readonly sentences: { [k: string]: string[] };
 };
 
-// biome-ignore lint: lint/suspicious/noExplicitAny
+// biome-ignore-start lint/suspicious/noExplicitAny: reason
 export function parseWord(word: any): Word | null {
 	const meanings = word.meanings;
 
@@ -31,7 +31,6 @@ export function parseWord(word: any): Word | null {
 	};
 }
 
-// biome-ignore lint: lint/suspicious/noExplicitAny
 function findPhonetics(phonoetics: any[]): string {
 	if (phonoetics.length === 0) return "";
 
@@ -46,7 +45,6 @@ function findPhonetics(phonoetics: any[]): string {
 	return result;
 }
 
-// biome-ignore lint: lint/suspicious/noExplicitAny
 function extractExamples(meanings: any[]): Map<string, string[]> {
 	const examples: Map<string, string[]> = new Map();
 	for (const meaning of meanings) {
@@ -69,3 +67,4 @@ function extractExamples(meanings: any[]): Map<string, string[]> {
 
 	return examples;
 }
+// biome-ignore-end lint/suspicious/noExplicitAny: reason
