@@ -4,7 +4,7 @@ export type Word = {
 	readonly definition: string;
 	readonly synonyms: string[];
 	readonly antonyms: string[];
-	readonly sentences: Map<string, string[]>;
+	readonly sentences: { [k: string]: string[] };
 };
 
 // biome-ignore lint: lint/suspicious/noExplicitAny
@@ -27,7 +27,7 @@ export function parseWord(word: any): Word | null {
 		definition: meanings[0].definitions[0].definition,
 		synonyms: meanings[0].synonyms,
 		antonyms: meanings[0].antonyms,
-		sentences: extractExamples(meanings),
+		sentences: Object.fromEntries(extractExamples(meanings)),
 	};
 }
 
@@ -36,9 +36,9 @@ function findPhonetics(phonoetics: any[]): string {
 	if (phonoetics.length === 0) return "";
 
 	let result = "";
-	for (const ph of phonoetics) {
-		if (ph.text) {
-			result = ph.text;
+	for (const phonetic of phonoetics) {
+		if (phonetic.text) {
+			result = phonetic.text;
 			break;
 		}
 	}
@@ -50,15 +50,20 @@ function findPhonetics(phonoetics: any[]): string {
 function extractExamples(meanings: any[]): Map<string, string[]> {
 	const examples: Map<string, string[]> = new Map();
 	for (const meaning of meanings) {
+		const partOfSpeech = meaning.partOfSpeech;
+
+		if (!examples.has(partOfSpeech)) {
+			examples.set(partOfSpeech, []);
+		}
+
 		for (const definition of meaning.definitions) {
 			if (definition.example) {
-				const partOfSpeech = examples.get(meaning.partOfSpeech);
-				if (partOfSpeech) {
-					partOfSpeech.push(definition.example);
-				} else {
-					examples.set(meaning.partOfSpeech, [definition.example]);
-				}
+				examples.get(meaning.partOfSpeech)?.push(definition.example);
 			}
+		}
+
+		if (examples.get(partOfSpeech)?.length === 0) {
+			examples.delete(partOfSpeech);
 		}
 	}
 
